@@ -1,70 +1,121 @@
-# Getting Started with Create React App
+## ReactJS Day-2
+### App.js:
+~~~
+import React, { useState } from 'react';
+import './App.css'; // Assuming you have a CSS file for styling
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
 
-## Available Scripts
+  const addTask = () => {
+      setTasks([...tasks, newTask]);
+      setNewTask('');
+  };
 
-In the project directory, you can run:
+  const removeTask = (index) => {
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
 
-### `npm start`
+  const editTask = (index) => {
+    const editTa=tasks.map((c,i)=>{
+      if(i==index){
+        return newTask;
+      }
+      else{
+        return c;
+      }
+    });
+    setTasks(editTa);
+    setNewTask('');
+  };
+  return (
+    <div className="container">
+      <h1>Todo List</h1>
+      <div className="input-container">
+        <input 
+          type="text" 
+          value={newTask} 
+          onChange={(a) => setNewTask(a.target.value)} 
+          placeholder="Enter a new task"
+        />
+        <button onClick={addTask}>Add Task</button>
+      </div>
+      <ul className="task-list">
+        {tasks.map((task, index) => (
+          <li key={index} className="task-item">
+            {task} 
+            <span>
+            <button className="edit-button" onClick={() => editTask(index)}>Edit</button>
+            <button className="remove-button" onClick={() => removeTask(index)}>Remove</button>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+export default App;
+~~~
+### App.css:
+~~~
+.container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 
-### `npm test`
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+button {
+  padding: 10px 20px;
 
-### `npm run build`
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+.task-list {
+  list-style-type: none;
+  padding: 0;
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+.task-item button {
+  background-color: #dc3545;
+  margin-left: 5px;
+}
+~~~
+### Output:
+https://ranjithd18.github.io/TODO-List/
+![image](https://github.com/RanjithD18/TODO-List/assets/93427221/d96d8f4c-3201-4604-93e6-06c10037f703)
+![image](https://github.com/RanjithD18/TODO-List/assets/93427221/4ccb8c00-2e84-40a2-a4ec-db3ae0aaf1c8)
+![image](https://github.com/RanjithD18/TODO-List/assets/93427221/65abab5e-66de-4f05-a9ef-1ab35bf09a96)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
